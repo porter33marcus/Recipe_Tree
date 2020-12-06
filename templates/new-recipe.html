@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} New Recipes {% endblock %}
+
+
+{% block body %}
+
+<h3>Add A New Recipe</h3>
+<hr>
+<form method="POST" action="/recipes/add-recipe">
+
+    <div class="form-group"> <label  for="recipe_name"> Recipe Name: </label>    
+    <input type="text" id="recipe_name" name="recipe_name" class="form-control" required autofocus ></div>
+
+    <div class="form-group"> <label  for="ingredients"> Ingredients: </label>    
+    <input type="text" id="ingredients" name="ingredients" class="form-control" required ></div>
+
+    <div class="form-group"> <label  for="preparation"> Preparation: </label>    
+    <input type="text" id="preparation" name="preparation" class="form-control" required ></div>
+
+    <div class="form-group"><label  for="notes"> Notes: </label>    
+    <input type="text" id="notes" name="notes" class="form-control" required ></div>
+
+    <div class="form-group"> <label  for="first_name"> First Name: </label>    
+        <input type="text" id="first_name" name="first_name" class="form-control" required ></div>
+    
+        <div class="form-group"> <label  for="last_name"> Last Name: </label>    
+        <input type="text" id="last_name" name="last_name" class="form-control" required ></div>
+
+    
+    <div class="form-group">
+    <label for="category">Category:</label>
+    <select name="category" class="form-control" required>
+        <option value="" selected disabled hidden> -- Choose Category -- </option>
+        {% for category in all_categories %}
+       <option value="{{ category['category_name'] }}">{{ category['category_name'] }}</option>
+    {% endfor %}
+    </select>
+</div>
+    <div class="form-group">  
+<input type="submit" value="Add Recipe"></div>
+
+</form>
+<hr>
+
+<br>
+
+{% endblock %}

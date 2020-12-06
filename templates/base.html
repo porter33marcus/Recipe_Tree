@@ -37,6 +37,27 @@
             <a class="nav-link" href="{{ url_for('login')}}">login</a>
             {% endif %}
           </li>
+          {% if current_user['role'] == 'admin' %}
+          <li>
+            <a class="nav-link" href="{{ url_for('admin_recipes') }}">Recipe Administration</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{{ url_for('admin_users') }}">User Administration</a>
+          </li>
+          {% endif %}
+          {% if current_user['role'] == 'admin' or current_user['role'] == 'contributor' %}
+          <li>
+            <a class="nav-link" href="{{ url_for('add_recipe') }}">Add Recipe</a>
+          </li>
+          {% endif %}
+          <li>
+            <a class="nav-link" href="{{ url_for('view_recipes') }}">Recipes</a>
+          </li>
+          
+          <li>
+            <a class="nav-link" href="{{ url_for('about') }}">About</a>
+          </li>
+          
         </ul>
 
         <form class="form-inline my-2 my-lg-0" method="POST">

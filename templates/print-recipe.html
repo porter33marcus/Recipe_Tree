@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %} Print a Recipe {% endblock %}
+
+
+{% block body %}
+
+<h3>{{ recipe['recipe_name'] }}</h3>
+<hr>
+<div class="form-group">
+    <label class="print">Food category:</label>
+    <p style="display:inline;">{{ recipe['category'] }}</p>
+</div>
+
+<div class="form-group">
+    <label class="print" for="recipe_ingredients"> Ingredients: </label>
+    
+    <p> {{ recipe['ingredients'] }} </p>
+    
+</div>
+
+<div class="form-group">
+    <label class="print" for="preparation"> Preparation steps: </label>
+    
+    
+    <p> {{ recipe['preparation'] }} </p>
+   
+</div>
+
+<div class="form-group">
+    <label class="print" for="notes"> Notes: </label>
+    {{ recipe['notes'] }}
+</div>
+<hr>
+<div class="form-group"> <label> Recipe owner: </label>
+    <p style="display:inline;">{{ recipe['first_name'] + ' ' + recipe['last_name'] }}</p>
+</div>
+
+
+<div class="form-group"> <label> Date added: </label>
+    <p style="display:inline;">{{ recipe['date_added'] }}</p>
+</div>
+
+<div class="form-group"> <label> Last modified: </label>
+    <p style="display:inline;">{{ recipe['date_modified'] }}</p>
+</div>
+
+<br>
+
+{% endblock %}

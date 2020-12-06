@@ -23,7 +23,8 @@ client = pymongo.MongoClient(mongo)
 db = client['recipe_app'] # Mongo collection
 users = db['users'] # Mongo document
 roles = db['roles'] # Mongo document
-
+categories = db['categories']
+recipes = db['recipes']
 
 login = LoginManager()
 login.init_app(app)
@@ -157,6 +158,12 @@ def update_myaccount(user_id):
         return redirect(url_for('index'))
     return redirect(url_for('index'))
 
+# unauthenticated users can view the about page
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    return render_template('about.html')
+
+
 
 ##########  Admin functionality -- User management ##########
 
@@ -164,7 +171,7 @@ def update_myaccount(user_id):
 @login_required
 @roles_required('admin')
 def admin_users():
-    return render_template('users.html', all_roles=roles.find(), all_users=users.find())
+    return render_template('users-admin.html', all_roles=roles.find(), all_users=users.find())
 
 @app.route('/admin/add-user', methods=['GET', 'POST'])
 @login_required
@@ -191,7 +198,7 @@ def admin_add_user():
         users.insert_one(new_user)
         flash(new_user['email'] + ' user has been added.', 'success')
         return redirect(url_for('admin_users'))
-    return render_template('users.html', all_roles=roles.find(), all_users=users.find())
+    return render_template('users-admin.html', all_roles=roles.find(), all_users=users.find())
 
 @app.route('/admin/delete-user/<user_id>', methods=['GET', 'POST'])
 @login_required
@@ -243,20 +250,96 @@ def admin_update_user(user_id):
 
 ##########  Recipes ##########
 
-@app.route('/recipes/new-recipe', methods=['GET'])
+@app.route('/recipes', methods=['GET', 'POST'])
 @login_required
-@roles_required('admin', 'contributor')
-def new_recipe():
-    return 'Retrieve new recipe page.'
+@roles_required('admin', 'contributor', 'user')
+def view_recipes():
+    return render_template('recipes.html', all_recipes=recipes.find())
 
-@app.route('/recipes/add-recipe', methods=['POST'])
+
+@app.route('/recipes/recipes', methods=['GET', 'POST'])
+@login_required
+@roles_required('admin')
+def admin_recipes():
+    return render_template('recipe-admin.html', all_categories=categories.find(), all_recipes=recipes.find())
+
+
+# administrators and contributors can add new recipes
+@app.route('/recipes/add-recipe', methods=['GET', 'POST'])
 @login_required
 @roles_required('admin', 'contributor')
 def add_recipe():
-    return 'Add new recipe to database.'
+    if request.method == 'POST':
+        form = request.form
+              
+        new_recipe = {
+            'recipe_name': form['recipe_name'],
+            'category': form['category'],
+            'ingredients': form['ingredients'],
+            'preparation': form['preparation'],
+            'notes': form['notes'],
+            'first_name': form['first_name'],
+            'last_name': form['last_name'],
+            'date_added': datetime.datetime.now(),
+            'date_modified': datetime.datetime.now()
+        }
+        recipes.insert_one(new_recipe)
+        flash('New recipe has been added.', 'success')
+        return redirect(url_for('view_recipes'))
+    return render_template('new-recipe.html', all_categories=categories.find())
 
-
-
+@app.route('/recipes/edit-recipe/<recipe_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required('admin')
+def edit_recipe(recipe_id):
+    edit_recipe = recipes.find_one({'_id': ObjectId(recipe_id)})
+    if edit_recipe:
+        return render_template('edit-recipe.html', recipe=edit_recipe, all_categories=categories.find())
+    flash('Recipe not found.', 'danger')
+    return redirect(url_for('admin_recipes'))
+@app.route('/recipes/update-recipe/<recipe_id>', methods=['POST'])
+@login_required
+@roles_required('admin')
+def update_recipe(recipe_id):
+    if request.method == 'POST':
+        form = request.form
+        recipes.update({'_id': ObjectId(recipe_id)},
+            {
+            'recipe_name': form['recipe_name'],
+            'category': form['category'],
+            'ingredients': form['ingredients'],
+            'preparation': form['preparation'],
+            'notes': form['notes'],
+            'first_name': form['first_name'],
+            'last_name': form['last_name'],
+            'date_added': form['date_added'],
+            'date_modified': datetime.datetime.now()
+            })
+        update_recipe = recipes.find_one({'_id': ObjectId(recipe_id)})
+        flash(update_recipe['recipe_name'] + ' has been updated.', 'success')
+        return redirect(url_for('view_recipes'))
+    return render_template('edit-recipe.html', all_categories=categories.find())
+@app.route('/recipes/delete-recipe/<recipe_id>', methods=['POST'])
+@login_required
+@roles_required('admin')
+def delete_recipe(recipe_id):
+    delete_recipe = recipes.find_one({'_id': ObjectId(recipe_id)})
+    if delete_recipe:
+        recipes.delete_one(delete_recipe)
+        flash(delete_recipe['recipe_name'] + ' has been deleted.', 'danger')
+        return redirect(url_for('view_recipes'))
+    flash('Recipe not found.', 'warning')
+    return redirect(url_for('view_recipes'))
+# authenticated users can print a recipe
+@app.route('/recipes/print-recipe/<recipe_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required('admin', 'contributor', 'user')
+def print_recipe(recipe_id):
+    print_recipe = recipes.find_one({'_id': ObjectId(recipe_id)})
+    if print_recipe:
+        return render_template('print-recipe.html', recipe=print_recipe)
+    flash('Recipe not found.', 'danger')
+    return redirect(url_for('view_recipes'))
 
 if __name__ == "__main__":
     app.run(debug=True)
