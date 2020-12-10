@@ -97,7 +97,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('view_recipes'))
 
     if request.method == 'POST':
         user = users.find_one({"email": request.form['username']})
@@ -108,10 +108,10 @@ def login():
             next_page = request.args.get('next')
 
             if not next_page or url_parse(next_page).netloc != '':
-                next_page = url_for('index')
+                next_page = url_for('view_recipes')
                 return redirect(next_page)
             flash("Logged in successfully!", category='success')
-            return redirect(request.args.get("next") or url_for("index"))
+            return redirect(request.args.get("next") or url_for("view_recipes"))
 
         flash("Wrong username or password!", category='error')
     return render_template('login.html')

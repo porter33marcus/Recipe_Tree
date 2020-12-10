@@ -5,49 +5,10 @@
 
 {% block body %} 
 
-<h1>Admin Recipe Page</h1>
+<h2>Admin Recipe Page</h2>
 <hr>
-
-<h3>Add a recipe</h3>
-  <hr>
-  <form method="POST" action="/recipes/add-recipe">
-
-    <div class="form-group"> <label  for="recipe_name"> Recipe Name: </label>    
-    <input type="text" id="recipe_name" name="recipe_name" class="form-control" required autofocus ></div>
-
-    <div class="form-group"> <label  for="ingredients"> Ingredients: </label>    
-    <input type="text" id="ingredients" name="ingredients" class="form-control" required ></div>
-
-    <div class="form-group"> <label  for="preparation"> Preparation: </label>    
-    <input type="text" id="preparation" name="preparation" class="form-control" required ></div>
-
-    <div class="form-group"><label  for="notes"> Notes: </label>    
-    <input type="text" id="notes" name="notes" class="form-control" required ></div>
-
-    <div class="form-group"> <label  for="first_name"> First Name: </label>    
-        <input type="text" id="first_name" name="first_name" class="form-control" required ></div>
-    
-        <div class="form-group"> <label  for="last_name"> Last Name: </label>    
-        <input type="text" id="last_name" name="last_name" class="form-control" required ></div>
-
-    
-    <div class="form-group">
-    <label for="category">Category:</label>
-    <select name="category" class="form-control" required>
-        <option value="" selected disabled hidden> -- Choose Category -- </option>
-        {% for category in all_categories %}
-       <option value="{{ category['category_name'] }}">{{ category['category_name'] }}</option>
-    {% endfor %}
-    </select>
-</div>
-    <div class="form-group">  
-<input type="submit" value="Add Recipe"></div>
-
-</form>
-  <hr>
-
-  <br>
-  {% if all_recipes %}
+<h3>Current Recipes</h3>
+{% if all_recipes %}
     <table class="table table-hover">
         <thead>
             <tr>
@@ -71,12 +32,14 @@
                 <td> {{ row['date_added'] }}</td>
                 
             
-                <td><form action="{{ url_for('delete_recipe', recipe_id=row['_id']) }}" method="POST">
-                    <input type="submit" value="Delete"  />
-                </form>    </td>
+                
 
                 <td><form action="{{ url_for('edit_recipe', recipe_id=row['_id']) }}" method="POST">
-                    <input type="submit" value="Edit"  />
+                    <input type="submit" value="Edit"  class="btn btn-warning"/>
+                </form>    </td>
+
+                <td><form action="{{ url_for('delete_recipe', recipe_id=row['_id']) }}" method="POST">
+                    <input type="submit" value="Delete"  class="btn btn-danger"/>
                 </form>    </td>
             </tr>
             {% endfor %}
@@ -84,4 +47,45 @@
     </table>
 {% endif %}
 
+
+<h3>Add a recipe</h3>
+  <hr>
+  <form method="POST" action="/recipes/add-recipe">
+
+    <div class="col-md-4 form-group"> <label  for="recipe_name"> Recipe Name: </label>    
+    <input type="text" id="recipe_name" name="recipe_name" class="form-control" required  ></div>
+
+    <div class="col-md-4 form-group"> <label  for="ingredients"> Ingredients: </label>    
+    <input type="text" id="ingredients" name="ingredients" class="form-control" required ></div>
+
+    <div class="col-md-4 form-group"> <label  for="preparation"> Preparation: </label>    
+    <input type="text" id="preparation" name="preparation" class="form-control" required ></div>
+
+    <div class="col-md-4 form-group"><label  for="notes"> Notes: </label>    
+    <input type="text" id="notes" name="notes" class="form-control" required ></div>
+
+    <div class="col-md-4 form-group"> <label  for="first_name"> First Name: </label>    
+        <input type="text" id="first_name" name="first_name" class="form-control" required ></div>
+    
+        <div class="col-md-4 form-group"> <label  for="last_name"> Last Name: </label>    
+        <input type="text" id="last_name" name="last_name" class="form-control" required ></div>
+
+    
+    <div class="col-md-4 form-group">
+    <label for="category">Category:</label>
+    <select name="category" class="form-control" required>
+        <option value="" selected disabled hidden> -- Choose Category -- </option>
+        {% for category in all_categories %}
+       <option value="{{ category['category_name'] }}">{{ category['category_name'] }}</option>
+    {% endfor %}
+    </select>
+</div>
+    <div class="col-md-4 form-group">  
+<input type="submit" value="Add Recipe" class="btn btn-success"></div>
+
+</form>
+  <hr>
+
+  <br>
+  
 {% endblock %}

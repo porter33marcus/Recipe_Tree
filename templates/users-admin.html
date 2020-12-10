@@ -4,45 +4,10 @@
 
 
 {% block body %} 
-
-<h1>Admin Page</h1>
-<hr>
-<p>My recipes admin page</p>
-<h3>Create your account</h3>
-  <hr>
-  <form method="POST" action="/admin/add-user">
-
-    <div class="form-group"> <label  for="first_name"> First Name: </label>    
-    <input type="text" id="first_name" name="first_name" required autofocus ></div>
-
-    <div class="form-group"> <label  for="last_name"> Last Name: </label>    
-    <input type="text" id="last_name" name="last_name" required ></div>
-
-    <div class="form-group"> <label  for="email"> Email: </label>    
-    <input type="text" id="email" name="email" required ></div>
-
-    <div class="form-group"><label  for="password"> Password: </label>    
-    <input type="text" id="password" name="password" required ></div>
-
-    <div class="form-group"> <label  for="confirm_password"> Confirm password: </label>    
-    <input type="text" id="confirm_password" name="confirm_password" required ></div>
-    <div class="form-group">
-    <label for="role">Role :</label>
-    <select name="role" required>
-        <option value="" selected disabled hidden> -- Choose role -- </option>
-        {% for role in all_roles %}
-       <option value="{{ role['role_name'] }}">{{ role['role_name'] }}</option>
-    {% endfor %}
-    </select>
-</div>
-    <div class="form-group">  
-<input type="submit" value="Add User"></div>
-
-</form>
-  <hr>
-
-  <br>
-  {% if all_users %}
+<h2>Admin Users Page</h2>
+<br/>
+<h3>Current Users</h3>
+{% if all_users %}
     <table class="table table-hover">
         <thead>
             <tr>
@@ -66,17 +31,60 @@
                 <td> {{ row['date_added'] }}</td>
                 <td> {{ row['date_modified'] }}</td>
             
-                <td><form action="{{ url_for('admin_delete_user', user_id=row['_id']) }}" method="POST">
-                    <input type="submit" value="Delete"  />
-                </form>    </td>
+                
 
                 <td><form action="{{ url_for('admin_edit_user', user_id=row['_id']) }}" method="POST">
-                    <input type="submit" value="Details"  />
+                    <input type="submit" value="edit" class="btn btn-warning" />
+                </form>    </td>
+
+                <td><form action="{{ url_for('admin_delete_user', user_id=row['_id']) }}" method="POST">
+                    <input type="submit" value="Delete"  class="btn btn-danger"/>
                 </form>    </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 {% endif %}
+
+
+
+
+<hr>
+
+<h3>Create New Account</h3>
+  <hr>
+  <form method="POST" action="/admin/add-user">
+
+    <div class="col-md-4 form-group"> <label  for="first_name"> First Name: </label>    
+    <input type="text" id="first_name" name="first_name" class="form-control" required  ></div>
+
+    <div class="col-md-4 form-group"> <label  for="last_name"> Last Name: </label>    
+    <input type="text" id="last_name" name="last_name" class="form-control" required ></div>
+
+    <div class="col-md-4 form-group> <label  for="email"> Email: </label>    
+    <input type="text" id="email" name="email" class="form-control" required ></div>
+
+    <div class="col-md-4 form-group><label  for="password"> Password: </label>    
+    <input type="text" id="password" name="password" class="form-control"  required ></div>
+
+    <div class="col-md-4 form-group> <label  for="confirm_password"> Confirm password: </label>    
+    <input type="text" id="confirm_password" name="confirm_password"  class="form-control" required ></div>
+    <div class="col-md-4 form-group>
+    <label for="role">Role :</label>
+    <select name="role" class="form-control" required>
+        <option value="" selected disabled hidden> -- Choose role -- </option>
+        {% for role in all_roles %}
+       <option value="{{ role['role_name'] }}">{{ role['role_name'] }}</option>
+    {% endfor %}
+    </select>
+</div>
+    <div class="col-md-4 form-group>  
+<input type="submit" class="btn btn-success" value="Add User"></div>
+
+</form>
+  <hr>
+
+  <br>
+  
 
 {% endblock %}
