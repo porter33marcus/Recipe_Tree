@@ -5,43 +5,57 @@
 
 {% block body %}
 
-<h3>{{ recipe['recipe_name'] }}</h3>
+<h2>{{ recipe['recipe_name'] }}</h2>
 <hr>
 <div class="form-group">
     <label class="print">Food category:</label>
+    <br/>
     <p style="display:inline;">{{ recipe['category'] }}</p>
 </div>
 
+<br/>
 <div class="form-group">
     <label class="print" for="recipe_ingredients"> Ingredients: </label>
-    
+    <br/>
     <p> {{ recipe['ingredients'] }} </p>
     
 </div>
 
+
+<br/>
 <div class="form-group">
     <label class="print" for="preparation"> Preparation steps: </label>
-    
+    <br/>
     
     <p> {{ recipe['preparation'] }} </p>
    
 </div>
 
+<br/>
 <div class="form-group">
     <label class="print" for="notes"> Notes: </label>
-    {{ recipe['notes'] }}
+    <br/>
+    <p>{{ recipe['notes'] }}</p>
 </div>
+
 <hr>
+<br/>
 <div class="form-group"> <label> Recipe owner: </label>
+    <br/>
     <p style="display:inline;">{{ recipe['first_name'] + ' ' + recipe['last_name'] }}</p>
 </div>
+<br/>
 
 
 <div class="form-group"> <label> Date added: </label>
+    <br/>
     <p style="display:inline;">{{ recipe['date_added'] }}</p>
 </div>
 
+
+<br/>
 <div class="form-group"> <label> Last modified: </label>
+    <br/>
     <p style="display:inline;">{{ recipe['date_modified'] }}</p>
 </div>
 

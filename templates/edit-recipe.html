@@ -5,60 +5,64 @@
 
 {% block body %}
 
-<h3>Edit a recipe</h3>
+<h2>Edit a recipe</h2>
 <hr>
 <form method="POST" action="{{ url_for('update_recipe', recipe_id=recipe['_id']) }}">
 
-    <div class="form-group">
+    <div class="col-md-4 form-group">
         <label for="recipe_name"> Recipe name: </label>
         <input type="text" id="recipe_name" name="recipe_name" class="form-control" value="{{ recipe['recipe_name'] }}"
             required autofocus>
     </div>
 
-    <div class="form-group"> <label  for="ingredients"> Ingredients: </label>    
-        <input type="text" id="ingredients" name="ingredients" class="form-control" value="{{ recipe['ingredients'] }}" required ></div>
+    <div class="col-md-4 form-group"> <label  for="ingredients"> Ingredients: </label>    
+        <input type="text" id="ingredients" name="ingredients" class="form-control" value="{{ recipe['ingredients'] }}" required >
+    </div>
     
 
         
     
 
-        <div class="form-group"> <label  for="preparation"> Preparation: </label>    
-            <input type="text" id="preparation" name="preparation" class="form-control" value="{{ recipe['preparation'] }}" required ></div>
+    <div class="col-md-4 form-group"> <label  for="preparation"> Preparation: </label>    
+        <input type="text" id="preparation" name="preparation" class="form-control" value="{{ recipe['preparation'] }}" required >
+    </div>
         
        
-    <div class="form-group">
+    <div class="col-md-4 form-group">
         <label for="notes"> Notes: </label>
         <textarea id="notes" name="notes" class="form-control" rows="15">
             {{ recipe['notes'] }}
         </textarea>
     </div>
-    <div class="form-group"> <label  for="first_name"> First Name: </label>    
-        <input type="text" id="first_name" name="first_name" class="form-control" required value="{{ recipe['first_name'] }}"></div>
+    <div class="col-md-4 form-group"> <label  for="first_name"> First Name: </label>    
+        <input type="text" id="first_name" name="first_name" class="form-control" required value="{{ recipe['first_name'] }}">
+    </div>
     
-        <div class="form-group"> <label  for="last_name"> Last Name: </label>    
-        <input type="text" id="last_name" name="last_name" class="form-control" required value="{{ recipe['last_name'] }}"></div>
+    <div class="col-md-4 form-group"> <label  for="last_name"> Last Name: </label>    
+        <input type="text" id="last_name" name="last_name" class="form-control" required value="{{ recipe['last_name'] }}">
+    </div>
 
     
-    <div class="form-group">
-    <label for="category">Category:</label>
-    <select name="category" class="form-control" required>
-        <option value="" selected disabled hidden> -- Choose Category -- </option>
-        {% for category in all_categories %}
-       <option value="{{ category['category_name'] }}">{{ category['category_name'] }}</option>
-    {% endfor %}
-    </select>
-</div>
+    <div class="col-md-4 form-group">
+        <label for="category">Category:</label>
+        <select name="category" class="form-control" required>
+            <option value="" selected disabled hidden> -- Choose Category -- </option>
+            {% for category in all_categories %}
+        <option value="{{ category['category_name'] }}">{{ category['category_name'] }}</option>
+        {% endfor %}
+        </select>
+    </div>
 
-    <div class="form-group"> <label for=" date_added"> Date added: </label>
+    <div class="col-md-4 form-group"> <label for=" date_added"> Date added: </label>
         <input type="text " name="date_added" class="form-control" value="{{ recipe['date_added'] }}" readonly>
     </div>
 
-    <div class="form-group"> <label for=" date_modified"> Last modified: </label>
+    <div class="col-md-4 form-group"> <label for=" date_modified"> Last modified: </label>
         <input type="text " name="date_modified" class="form-control" value="{{ recipe['date_modified'] }}" readonly>
     </div>
 
     <div>
-        <input type="submit" class="btn btn-secondary" value="Update Recipe"></div>
+        <input type="submit" class="btn btn-success" value="Update Recipe"></div>
 
 </form>
 <hr>

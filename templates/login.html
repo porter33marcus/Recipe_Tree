@@ -1,23 +1,24 @@
 
 {% extends 'base.html' %}
 
-{% block title %} Recipe Tree Login {% endblock %}
+{% block title %} Recipe-Tree Login {% endblock %}
 
 
 {% block body %} 
 
 <form method=POST action="{{ url_for('login') }}">
-<p>
-<label for="username">Username</label>
-<input type="text" name="username" id="username" placeholder="Username" autofocus>
-</p>
+    <div class="col-md-4 form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="Username" autofocus>
+    </div>
 
-<p>
-<label for="password">Password</label>
-<input type="password" name="password" id="password" placeholder="Password">
-</p>
-<p><button type="submit" class="btn btn-primary btn-block">Log In</button></p>
-
+    <div class="col-md-4 form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+    </div>
+    <div class="col-md-4 form-group">
+        <button type="submit" class="btn btn-primary btn-block">Log In</button></p>
+    </div>
 </form>
 <p>Don't have an account? for this site an administrator must create an account for you. please contact abc@xyz.com for gaining access. Thank you!</p>
 

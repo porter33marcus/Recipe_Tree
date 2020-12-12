@@ -5,41 +5,41 @@
 
 {% block body %} 
 
-<h3>Edit an account</h3>
+<h2>Edit an account</h2>
   <hr>
   {% if user %}
   <form method="POST" action="{{ url_for('admin_update_user', user_id=user['_id']) }}">
 
-        <p> <label  for="first_name"> First Name: </label>    
-        <input type="text" id="first_name" name="first_name" required autofocus value="{{ user['first_name'] }}"></p>
+        <div class="col-md-4 form-group"> <label  for="first_name"> First Name: </label>    
+        <input type="text" class="form-control" id="first_name" name="first_name" required autofocus value="{{ user['first_name'] }}"></div>
 
-        <p> <label  for="last_name"> Last Name: </label>    
-        <input type="text" id="last_name" name="last_name" required value="{{ user['last_name'] }}" ></p>
+        <div class="col-md-4 form-group"> <label  for="last_name"> Last Name: </label>    
+        <input type="text" class="form-control" id="last_name" name="last_name" required value="{{ user['last_name'] }}" ></div>
 
-        <p> <label  for="email"> Email: </label>    
-        <input type="text" id="email" name="email" required value="{{ user['email'] }}"></p>
+        <div class="col-md-4 form-group"> <label  for="email"> Email: </label>    
+        <input type="text" class="form-control" id="email" name="email" required value="{{ user['email'] }}"></div>
     
-        <p> <label  for="password"> Password: </label>    
-        <input type="text" id="password" name="password" required value="{{ user['password'] }}"></p>
+        <div class="col-md-4 form-group"> <label  for="password"> Password: </label>    
+        <input type="text" class="form-control" id="password" name="password" required value="{{ user['password'] }}"></div>
     
-        <p> <label  for="confirm_password"> Confirm password: </label>    
-        <input type="text" id="confirm_password" name="confirm_password" required value="{{ user['password'] }}"></p>
-        <p> 
+        <div class="col-md-4 form-group"> <label  for="confirm_password"> Confirm password: </label>    
+        <input type="text" class="form-control" id="confirm_password" name="confirm_password" required value="{{ user['password'] }}"></div>
+        <div class="col-md-4 form-group"> 
         <label for="role">Role :</label>
-        <select name="role" >
+        <select name="role" class="form-control">
         {% for role in all_roles %}
            <option value="{{ role['role_name'] }}"{% if role['role_name'] == user['role'] %} SELECTED {% endif %}>{{ role['role_name'] }}</option>    
            {% endfor %}
         
           </select>
-        </p>
-        <p> <label  for="date_added"> Date Added: </label>    
-            <input type="text" id="date_added" name="date_added" required value="{{ user['date_added'] }}" readonly></p>
-            <p> <label  for="date_modified"> Date Modifed: </label>    
-                <input type="text" id="date_modified" name="date_modified" required value="{{ user['date_modified'] }}" readonly></p>
+        </div>
+        <div class="col-md-4 form-group"> <label  for="date_added"> Date Added: </label>    
+            <input type="text" class="form-control" id="date_added" name="date_added" required value="{{ user['date_added'] }}" readonly></div>
+            <div class="col-md-4 form-group"> <label  for="date_modified"> Date Modifed: </label>    
+                <input type="text" class="form-control" id="date_modified" name="date_modified" required value="{{ user['date_modified'] }}" readonly></div>
 
-        <p>  
-    <input type="submit" value="Update User"></p>
+        <div class="col-md-4 form-group">  
+    <input type="submit"  class="btn btn-success" value="Update User"></div>
 
   </form>
   
